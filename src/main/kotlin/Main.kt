@@ -1,7 +1,24 @@
+import gen.Generator
+import parse.Parser
+import token.Tokenizer
+
 fun main(args: Array<String>) {
     println("Hello World!")
 
-    // Try adding program arguments via Run/Debug configuration.
-    // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-    println("Program arguments: ${args.joinToString()}")
+    val code = """
+        fun a() {
+            a = 5
+            b = a*a
+            c = b+a
+            result = c/3
+        }
+        
+        fun main() {
+            a = 20
+            main = 5*a
+        }
+    """.trimIndent()//10
+    val token = Tokenizer(code).tokenize()
+    val node = Parser(token).program()
+    Generator(node).generate()
 }
